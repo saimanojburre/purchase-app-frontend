@@ -1,0 +1,68 @@
+/* ===== Topbar ===== */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1e293b; /* dark slate (premium look) */
+  padding: 12px 24px;
+  color: white;
+}
+
+/* Logo */
+.logo {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Tabs container */
+.tabs {
+  display: flex;
+  gap: 12px;
+}
+
+/* Tab buttons */
+.tabs a {
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 20px;
+  background: #334155; /* consistent dark */
+  color: #cbd5f5;
+  font-size: 14px;
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.tabs a:hover {
+  background: #475569;
+  color: #fff;
+}
+
+/* Active tab (🔥 clean blue instead of random green) */
+.tabs a.active {
+  background: #2563eb; /* primary blue */
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+/* Logout button */
+.logout {
+  background: #334155;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.logout:hover {
+  background: #475569;
+}
+
+/* ===== Page content ===== */
+.content {
+  padding: 30px;
+  background: #f1f5f9; /* light neutral background */
+  min-height: 100vh;
+}

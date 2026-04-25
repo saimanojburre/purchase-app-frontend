@@ -1,0 +1,39 @@
+<div class="report-wrapper">
+  <h2 class="title">Reports</h2>
+
+  <div class="filter-card">
+    <form [formGroup]="form" (ngSubmit)="search()">
+      <input type="date" formControlName="startDate" />
+      <input type="date" formControlName="endDate" />
+      <input type="text" formControlName="customerName" placeholder="Customer Name" />
+
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <div *ngIf="data.length == 0" class="no-data">
+    {{ flag ? errmsg : 'No Data Found' }}
+  </div>
+
+  <div *ngIf="data.length > 0" class="table-container">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th>Date</th>
+      </tr>
+
+      <tr *ngFor="let item of data">
+        <td>{{ item.customerName }}</td>
+        <td>{{ item.productName }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price | currency: 'INR' }}</td>
+        <td>{{ item.amount | currency: 'INR' }}</td>
+        <td>{{ item.date }}</td>
+      </tr>
+    </table>
+  </div>
+</div>

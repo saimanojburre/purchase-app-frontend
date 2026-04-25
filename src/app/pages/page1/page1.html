@@ -1,0 +1,19 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input formControlName="customerName" placeholder="Customer Name" />
+  <input formControlName="productName" placeholder="Product Name" />
+  <input formControlName="quantity" type="number" placeholder="Quantity" />
+  <input formControlName="price" type="number" placeholder="Price" />
+
+  <button type="submit">Submit</button>
+</form>
+
+<hr />
+
+<div *ngFor="let item of dataList" class="card">
+  <h3>{{ item.customerName }}</h3>
+  <p>{{ item.productName }}</p>
+  <p>Qty: {{ item.quantity }}</p>
+  <p>Price: {{ item.price | currency: 'INR' }}</p>
+  <p>Amount: {{ item.amount | currency: 'INR' }}</p>
+  <p>Date: {{ item.date }}</p>
+</div>

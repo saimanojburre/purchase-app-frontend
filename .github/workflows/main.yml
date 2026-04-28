@@ -20,3 +20,4 @@ jobs:
           app_location: '/'
           api_location: ''
           output_location: 'dist/tab-demo'
+          app_build_command: 'npm install && npm run build -- --configuration production'

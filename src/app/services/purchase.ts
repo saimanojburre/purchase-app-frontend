@@ -6,7 +6,8 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class Purchase {
-  private baseUrl = 'http://localhost:8080/api/purchases';
+  private baseUrl =
+    'https://purchase-api-ekhdhaasfsfjc2cv.southindia-01.azurewebsites.net/api/purchases';
 
   // 🔥 cache
   private dataSubject: { [key: string]: BehaviorSubject<any[]> } = {};

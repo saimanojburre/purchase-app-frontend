@@ -34,24 +34,39 @@
           </span>
           <input *ngIf="editRowId === item.id" [(ngModel)]="edititem.customerName" />
         </td>
-        <td>{{ item.productName }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.price | currency: 'INR' }}</td>
+        <td>
+          <span *ngIf="editRowId !== item.id">
+            {{ item.productName }}
+          </span>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="edititem.productName" />
+        </td>
+        <td>
+          <span *ngIf="editRowId !== item.id">
+            {{ item.quantity }}
+          </span>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="edititem.quantity" />
+        </td>
+        <td>
+          <span *ngIf="editRowId !== item.id">
+            {{ item.price | currency: 'INR' }}
+          </span>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="edititem.price" />
+        </td>
         <td>{{ item.amount | currency: 'INR' }}</td>
         <td>{{ item.date }}</td>
         <td class="action-cell">
           <ng-container *ngIf="editRowId !== item.id"
-            ><button class="action-btn edit">
+            ><button type="button" class="action-btn edit">
               <i class="fas fa-edit" (click)="onEdit(item)"></i>
             </button>
-            <button class="action-btn delete"><i class="fas fa-trash"></i></button
+            <button type="button" class="action-btn delete"><i class="fas fa-trash"></i></button
           ></ng-container>
 
           <ng-container *ngIf="editRowId === item.id"
-            ><button class="action-btn save" (click)="saveEdit()">
+            ><button type="button" class="action-btn save" (click)="saveEdit()">
               <i class="fas fa-check"></i>
             </button>
-            <button class="action-btn cancel" (click)="cancelEdit()">
+            <button type="button" class="action-btn cancel" (click)="cancelEdit()">
               <i class="fas fa-times"></i></button
           ></ng-container>
         </td>

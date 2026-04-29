@@ -1,13 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Purchase {
-  private baseUrl =
-    'https://purchase-api-ekhdhaasfsfjc2cv.southindia-01.azurewebsites.net/api/purchases';
+  private baseUrl = environment.apiUrl + '/api/purchases';
 
   // 🔥 cache
   private dataSubject: { [key: string]: BehaviorSubject<any[]> } = {};

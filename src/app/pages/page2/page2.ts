@@ -98,12 +98,18 @@ export class Page2 {
     this.edititem = {};
   }
   saveEdit() {
-    this.service.update(this.edititem).subscribe(() => {
-      const index = this.data.findIndex((x: any) => x.id === this.edititem.id);
-      if (index !== -1) {
-        this.data[index] = { ...this.edititem };
-      }
-      this.editRowId = null;
+    this.service.update(this.edititem).subscribe({
+      next: (res: any) => {
+        this.data = this.data.map((item) => (item.id === res.id ? { ...res } : item));
+        this.service.setData('page2', this.data);
+
+        this.editRowId = null;
+        this.edititem = {};
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        console.error('Update failed', err);
+      },
     });
   }
 }

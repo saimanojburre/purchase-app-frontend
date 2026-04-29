@@ -1,4 +1,4 @@
-name: Azure Static Web Apps CI/CD
+name: Deploy Angular to Azure App Service
 
 on:
   push:
@@ -6,20 +6,25 @@ on:
       - main
 
 jobs:
-  build_and_deploy_job:
+  build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Deploy
-        uses: Azure/static-web-apps-deploy@v1
+      - name: Checkout code
+        uses: actions/checkout@v3
+        -name: Setup Node
+        uses: action/setup-node@v3
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: 'upload'
-          app_location: '/'
-          api_location: ''
-          output_location: 'dist/tab-demo/browser'
-          app_build_command: 'npm install && npm run build -- --configuration production'
-        env:
-          apiUrl: ${{secrets.apiUrl}}
+          node-version: 22
+      
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Angular app
+        run: npm run build -- --configuration production
+
+      - name: Deploy to Azure Web App
+        uses: Azure/webapps-deploy@v2
+        with:
+          app-name: purchase-app
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE}}
+          package: dist/tab-demo/browser

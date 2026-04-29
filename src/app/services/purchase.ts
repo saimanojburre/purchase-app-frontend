@@ -18,6 +18,13 @@ export class Purchase {
   create(data: any) {
     return this.http.post(this.baseUrl, data);
   }
+  update(data: any) {
+    return this.http.put(`${this.baseUrl}/${data.id}`, data);
+  }
+
+  delete(id: number) {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
 
   getAll() {
     return this.http.get<any[]>(this.baseUrl);

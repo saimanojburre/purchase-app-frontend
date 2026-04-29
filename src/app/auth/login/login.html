@@ -5,6 +5,9 @@
     <input type="text" formControlName="username" placeholder="Username" />
     <input type="password" formControlName="password" placeholder="Password" />
 
-    <button type="submit">Login</button>
+    <button type="submit" [disabled]="loginForm.invalid || isLoading" class="login-btn">
+      Login
+      <span *ngIf="isLoading" class="loader"></span>
+    </button>
   </form>
 </div>

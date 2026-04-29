@@ -19,6 +19,8 @@ export class Page2 {
   form!: FormGroup;
   baseData: any[] = [];
   data: any[] = [];
+  editRowId: number | null = null;
+  edititem: any = {};
 
   startDate!: string;
   endDate!: string;
@@ -85,6 +87,23 @@ export class Page2 {
           this.cd.detectChanges();
         },
       });
+    });
+  }
+  onEdit(item: any) {
+    this.editRowId = item.id;
+    this.edititem = { ...item };
+  }
+  cancelEdit() {
+    this.editRowId = null;
+    this.edititem = {};
+  }
+  saveEdit() {
+    this.service.update(this.edititem).subscribe(() => {
+      const index = this.data.findIndex((x: any) => x.id === this.edititem.id);
+      if (index !== -1) {
+        this.data[index] = { ...this.edititem };
+      }
+      this.editRowId = null;
     });
   }
 }

@@ -7,7 +7,7 @@
       <input type="date" formControlName="endDate" />
       <input type="text" formControlName="customerName" placeholder="Customer Name" />
 
-      <button type="submit">Search</button>
+      <button type="submit" class="submit-btn">Search</button>
     </form>
   </div>
 
@@ -24,15 +24,37 @@
         <th>Price</th>
         <th>Amount</th>
         <th>Date</th>
+        <th>Actions</th>
       </tr>
 
       <tr *ngFor="let item of data">
-        <td>{{ item.customerName }}</td>
+        <td>
+          <span *ngIf="editRowId !== item.id">
+            {{ item.customerName }}
+          </span>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="edititem.customerName" />
+        </td>
         <td>{{ item.productName }}</td>
         <td>{{ item.quantity }}</td>
         <td>{{ item.price | currency: 'INR' }}</td>
         <td>{{ item.amount | currency: 'INR' }}</td>
         <td>{{ item.date }}</td>
+        <td class="action-cell">
+          <ng-container *ngIf="editRowId !== item.id"
+            ><button class="action-btn edit">
+              <i class="fas fa-edit" (click)="onEdit(item)"></i>
+            </button>
+            <button class="action-btn delete"><i class="fas fa-trash"></i></button
+          ></ng-container>
+
+          <ng-container *ngIf="editRowId === item.id"
+            ><button class="action-btn save" (click)="saveEdit()">
+              <i class="fas fa-check"></i>
+            </button>
+            <button class="action-btn cancel" (click)="cancelEdit()">
+              <i class="fas fa-times"></i></button
+          ></ng-container>
+        </td>
       </tr>
     </table>
   </div>

@@ -21,3 +21,5 @@ jobs:
           api_location: ''
           output_location: 'dist/tab-demo/browser'
           app_build_command: 'npm install && npm run build -- --configuration production'
+        env:
+        apiUrl: ${{secrets.apiUrl}}

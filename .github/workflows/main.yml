@@ -27,5 +27,5 @@ jobs:
         uses: Azure/webapps-deploy@v2
         with:
           app-name: purchase-app #check
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE}}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE   }}
           package: dist/tab-demo/browser

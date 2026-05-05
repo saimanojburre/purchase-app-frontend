@@ -7,13 +7,38 @@
   <button type="submit">Submit</button>
 </form>
 
-<hr />
-
-<div *ngFor="let item of dataList" class="card">
+<!-- <div *ngFor="let item of dataList" class="card">
   <h3>{{ item.customerName }}</h3>
   <p>{{ item.productName }}</p>
   <p>Qty: {{ item.quantity }}</p>
   <p>Price: {{ item.price | currency: 'INR' }}</p>
   <p>Amount: {{ item.amount | currency: 'INR' }}</p>
   <p>Date: {{ item.date }}</p>
+</div> -->
+
+<div class="table-container">
+<table border="1" width="100%" *ngIf="dataList.length > 0">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Product</th>
+      <th>Qty</th>
+      <th>Price</th>
+      <th>Amount</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let item of dataList">
+      <td>{{ item.customerName }}</td>
+      <td>{{ item.productName }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.price | currency: 'INR' }}</td>
+      <td>{{ item.amount | currency: 'INR' }}</td>
+      <td>{{ item.date }}</td>
+    </tr>
+  </tbody>
+</table>
 </div>
+<!-- <p *ngIf="dataList.length === 0">No data available</p> -->

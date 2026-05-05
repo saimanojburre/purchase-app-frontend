@@ -55,40 +55,72 @@ export class Page2 {
     });
   }
 
-  search() {
-    const { startDate, endDate, customerName } = this.form.value;
+  // search() {
+  //   const { startDate, endDate, customerName } = this.form.value;
 
-    this.flag = false;
-    this.errmsg = '';
-    this.data = [];
+  //   this.flag = false;
+  //   this.errmsg = '';
+  //   this.data = [];
 
-    // API 1 → Date
-    this.service.getByDate(startDate, endDate).subscribe((dateRes) => {
-      // API 2 → Name (will fail if empty)
-      this.service.getByName(customerName).subscribe({
-        next: (nameRes) => {
-          const filtered = nameRes.filter(
-            (n: any) => n.customerName.toLowerCase() === customerName.toLowerCase(),
-          );
+  //   // API 1 → Date
+  //   this.service.getByDate(startDate, endDate).subscribe((dateRes) => {
+  //     // API 2 → Name (will fail if empty)
+  //     this.service.getByName(customerName).subscribe({
+  //       next: (nameRes) => {
+  //         const filtered = nameRes.filter(
+  //           (n: any) => n.customerName.toLowerCase() === customerName.toLowerCase(),
+  //         );
 
-          this.data = [...filtered];
-          // store in cache
-          this.service.setData('page2', this.data);
-          this.cd.detectChanges();
-          this.flag = false;
-        },
+  //         this.data = [...filtered];
+  //         // store in cache
+  //         this.service.setData('page2', this.data);
+  //         this.cd.detectChanges();
+  //         this.flag = false;
+  //       },
 
-        error: (err) => {
-          console.error('Name API failed:', err);
-          this.errmsg = 'Something went wrong, try again later';
-          this.flag = true;
-          // REQUIREMENT: no data should be shown
-          this.data = [];
-          this.cd.detectChanges();
-        },
-      });
+  //       error: (err) => {
+  //         console.error('Name API failed:', err);
+  //         this.errmsg = 'Something went wrong, try again later';
+  //         this.flag = true;
+  //         // REQUIREMENT: no data should be shown
+  //         this.data = [];
+  //         this.cd.detectChanges();
+  //       },
+  //     });
+  //   });
+  // }
+search() {
+  const { startDate, endDate, customerName } = this.form.value;
+
+  this.flag = false;
+  this.errmsg = '';
+  this.data = [];
+
+  this.service.getByDate(startDate, endDate).subscribe((dateRes) => {
+
+    this.service.getByName(customerName).subscribe({
+      next: (nameRes) => {
+
+        // Apply BOTH filters
+        const filtered = dateRes.filter((d: any) =>
+          nameRes.some((n: any) => n.id === d.id)
+        );
+
+        this.data = [...filtered];
+
+        this.service.setData('page2', this.data);
+        this.cd.detectChanges();
+      },
+
+      error: (err) => {
+        this.errmsg = 'Something went wrong, try again later';
+        this.flag = true;
+        this.data = [];
+        this.cd.detectChanges();      },
     });
-  }
+  });
+}
+
   onEdit(item: any) {
     this.editRowId = item.id;
     this.edititem = { ...item };

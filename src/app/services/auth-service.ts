@@ -7,15 +7,15 @@ import { Config } from './config';
   providedIn: 'root',
 })
 export class AuthService {
-  // private baseUrl = environment.apiUrl;
+  private baseUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient,
     private config: Config,
   ) {}
-  private get baseUrl(): string {
-    return `${this.config.apiUrl}`;
-  }
+  // private get baseUrl(): string {
+  //   return `${this.config.apiUrl}`;
+  // }
   login(data: any) {
     return this.http.post(`${this.baseUrl}/api/auth/login`, data, { responseType: 'text' });
   }

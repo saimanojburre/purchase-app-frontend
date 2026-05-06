@@ -8,7 +8,7 @@ import { Config } from './config';
   providedIn: 'root',
 })
 export class Purchase {
-  // private baseUrl = Config.apiUrl + '/api/purchases';
+  private baseUrl = environment.apiUrl + '/api/purchases';
 
   // cache
   private dataSubject: { [key: string]: BehaviorSubject<any[]> } = {};
@@ -19,9 +19,9 @@ export class Purchase {
     private config: Config,
   ) {}
 
-  private get baseUrl(): string {
-    return `${this.config.apiUrl}/api/purchases`;
-  }
+  // private get baseUrl(): string {
+  //   return `${this.config.apiUrl}/api/purchases`;
+  // }
   create(data: any) {
     return this.http.post(this.baseUrl, data);
   }

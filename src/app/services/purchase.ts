@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment.prod';
 export class Purchase {
   private baseUrl = environment.apiUrl + '/api/purchases';
 
-  // 🔥 cache
+  // cache
   private dataSubject: { [key: string]: BehaviorSubject<any[]> } = {};
   // data$ = this.dataSubject.asObservable();
 

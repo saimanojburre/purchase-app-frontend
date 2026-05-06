@@ -20,6 +20,7 @@ export class Page2 {
   baseData: any[] = [];
   data: any[] = [];
   editRowId: number | null = null;
+  deleteRowId: number | null = null;
   edititem: any = {};
 
   startDate!: string;
@@ -89,37 +90,34 @@ export class Page2 {
   //     });
   //   });
   // }
-search() {
-  const { startDate, endDate, customerName } = this.form.value;
+  search() {
+    const { startDate, endDate, customerName } = this.form.value;
 
-  this.flag = false;
-  this.errmsg = '';
-  this.data = [];
+    this.flag = false;
+    this.errmsg = '';
+    this.data = [];
 
-  this.service.getByDate(startDate, endDate).subscribe((dateRes) => {
+    this.service.getByDate(startDate, endDate).subscribe((dateRes) => {
+      this.service.getByName(customerName).subscribe({
+        next: (nameRes) => {
+          // Apply BOTH filters
+          const filtered = dateRes.filter((d: any) => nameRes.some((n: any) => n.id === d.id));
 
-    this.service.getByName(customerName).subscribe({
-      next: (nameRes) => {
+          this.data = [...filtered];
 
-        // Apply BOTH filters
-        const filtered = dateRes.filter((d: any) =>
-          nameRes.some((n: any) => n.id === d.id)
-        );
+          this.service.setData('page2', this.data);
+          this.cd.detectChanges();
+        },
 
-        this.data = [...filtered];
-
-        this.service.setData('page2', this.data);
-        this.cd.detectChanges();
-      },
-
-      error: (err) => {
-        this.errmsg = 'Something went wrong, try again later';
-        this.flag = true;
-        this.data = [];
-        this.cd.detectChanges();      },
+        error: (err) => {
+          this.errmsg = 'Something went wrong, try again later';
+          this.flag = true;
+          this.data = [];
+          this.cd.detectChanges();
+        },
+      });
     });
-  });
-}
+  }
 
   onEdit(item: any) {
     this.editRowId = item.id;
@@ -141,6 +139,29 @@ search() {
       },
       error: (err) => {
         console.error('Update failed', err);
+      },
+    });
+  }
+  onDelete(item: any) {
+    this.deleteRowId = item.id;
+  }
+  cancelDelete() {
+    this.deleteRowId = null;
+  }
+  confirmDeletion(id: number) {
+    this.service.delete(id).subscribe({
+      next: () => {
+        this.data = this.data.filter((item) => item.id !== id);
+        this.service.setData('page2', this.data);
+        if (this.data.length === 0) {
+          this.flag = true;
+          this.errmsg = 'No Data Found';
+        }
+        this.deleteRowId = null;
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        console.log(err);
       },
     });
   }

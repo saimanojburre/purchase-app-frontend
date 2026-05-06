@@ -55,11 +55,12 @@
         <td>{{ item.amount | currency: 'INR' }}</td>
         <td>{{ item.date }}</td>
         <td class="action-cell">
-          <ng-container *ngIf="editRowId !== item.id"
-            ><button type="button" class="action-btn edit">
-              <i class="fas fa-edit" (click)="onEdit(item)"></i>
+          <ng-container *ngIf="editRowId !== item.id && deleteRowId !== item.id"
+            ><button type="button" class="action-btn edit" (click)="onEdit(item)">
+              <i class="fas fa-edit"></i>
             </button>
-            <button type="button" class="action-btn delete"><i class="fas fa-trash"></i></button
+            <button type="button" class="action-btn delete" (click)="onDelete(item)">
+              <i class="fas fa-trash"></i></button
           ></ng-container>
 
           <ng-container *ngIf="editRowId === item.id"
@@ -67,6 +68,13 @@
               <i class="fas fa-check"></i>
             </button>
             <button type="button" class="action-btn cancel" (click)="cancelEdit()">
+              <i class="fas fa-times"></i></button
+          ></ng-container>
+          <ng-container *ngIf="deleteRowId === item.id"
+            ><button type="button" class="action-btn save" (click)="confirmDeletion(item.id)">
+              <i class="fas fa-check"></i>
+            </button>
+            <button type="button" class="action-btn cancel" (click)="cancelDelete()">
               <i class="fas fa-times"></i></button
           ></ng-container>
         </td>

@@ -2,19 +2,26 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
+import { Config } from './config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Purchase {
-  private baseUrl = environment.apiUrl + '/api/purchases';
+  // private baseUrl = Config.apiUrl + '/api/purchases';
 
   // cache
   private dataSubject: { [key: string]: BehaviorSubject<any[]> } = {};
   // data$ = this.dataSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private config: Config,
+  ) {}
 
+  private get baseUrl(): string {
+    return `${this.config.apiUrl}/api/purchases`;
+  }
   create(data: any) {
     return this.http.post(this.baseUrl, data);
   }

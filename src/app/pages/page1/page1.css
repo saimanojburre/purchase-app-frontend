@@ -30,10 +30,38 @@ input:focus {
 }
 
 /* ===== Button ===== */
-button {
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+.submit-btn {
   padding: 12px;
   background: #2563eb;
   color: white;
+  width: 10rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.25s;
+}
+/* Hover */
+.submit-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+.submit-btn:disabled {
+  background-color: #d1d5db;
+  color: #6b7280;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.clear-btn {
+  padding: 12px;
+  background: #6b7280;
+  color: white;
+  width: 10rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -42,8 +70,8 @@ button {
 }
 
 /* Hover */
-button:hover {
-  background: #1e40af;
+.clear-btn:hover {
+  background: #474d53;
   transform: translateY(-1px);
 }
 
@@ -169,4 +197,20 @@ tr:hover {
 .action-btn.delete:hover {
   background-color: #d32f2f;
   color: white;
+}
+
+.loader {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ccc;
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }

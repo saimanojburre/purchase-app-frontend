@@ -28,6 +28,7 @@ export class Page2 {
   customerName!: string;
   errmsg = '';
   flag = false;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -36,9 +37,9 @@ export class Page2 {
   ) {}
   ngOnInit() {
     this.form = this.fb.group({
-      startDate: [''],
-      endDate: [''],
-      customerName: [''],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      customerName: ['', Validators.required],
     });
 
     const savedForm = this.service.getFormData('page2');
@@ -91,15 +92,18 @@ export class Page2 {
   //   });
   // }
   search() {
+    if (this.isLoading) return;
     const { startDate, endDate, customerName } = this.form.value;
 
     this.flag = false;
     this.errmsg = '';
     this.data = [];
+    this.isLoading = true;
 
     this.service.getByDate(startDate, endDate).subscribe((dateRes) => {
       this.service.getByName(customerName).subscribe({
         next: (nameRes) => {
+          this.isLoading = false;
           // Apply BOTH filters
           const filtered = dateRes.filter((d: any) => nameRes.some((n: any) => n.id === d.id));
 
@@ -110,6 +114,7 @@ export class Page2 {
         },
 
         error: (err) => {
+          this.isLoading = false;
           this.errmsg = 'Something went wrong, try again later';
           this.flag = true;
           this.data = [];
@@ -117,6 +122,12 @@ export class Page2 {
         },
       });
     });
+  }
+  clearForm() {
+    this.form.reset();
+    this.data = [];
+    this.errmsg = 'No Data Found';
+    this.flag = true;
   }
 
   onEdit(item: any) {

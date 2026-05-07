@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 export class Page1 implements OnInit {
   form!: FormGroup;
   dataList: any[] = [];
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -49,10 +50,12 @@ export class Page1 implements OnInit {
     });
   }
   onSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid && this.isLoading) return;
 
+    this.isLoading = true;
     this.service.create(this.form.value).subscribe({
       next: (res: any) => {
+        this.isLoading = false;
         // call API only once (first time or always if you want fresh)
         this.service.getAll().subscribe((data: any[]) => {
           const latest = data;
@@ -64,6 +67,16 @@ export class Page1 implements OnInit {
           this.cd.detectChanges();
         });
       },
+      error: (err: any) => {
+        this.isLoading = false;
+        console.log(err);
+      },
     });
+  }
+
+  clearForm() {
+    this.form.reset();
+    this.dataList = [];
+    this.service.setData('page1', this.dataList);
   }
 }

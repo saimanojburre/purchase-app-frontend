@@ -1,10 +1,19 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form">
   <input formControlName="customerName" placeholder="Customer Name" />
   <input formControlName="productName" placeholder="Product Name" />
   <input formControlName="quantity" type="number" placeholder="Quantity" />
   <input formControlName="price" type="number" placeholder="Price" />
-
-  <button type="submit">Submit</button>
+  <div class="buttons">
+    <button
+      type="submit"
+      class="submit-btn"
+      [disabled]="form.invalid || isLoading"
+      (click)="onSubmit()"
+    >
+      Submit <span *ngIf="isLoading" class="loader"></span>
+    </button>
+    <button type="submit" class="clear-btn" (click)="clearForm()">Clear</button>
+  </div>
 </form>
 
 <!-- <div *ngFor="let item of dataList" class="card">
@@ -17,28 +26,28 @@
 </div> -->
 
 <div class="table-container">
-<table border="1" width="100%" *ngIf="dataList.length > 0">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Product</th>
-      <th>Qty</th>
-      <th>Price</th>
-      <th>Amount</th>
-      <th>Date</th>
-    </tr>
-  </thead>
+  <table border="1" width="100%" *ngIf="dataList.length > 0">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th>Date</th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <tr *ngFor="let item of dataList">
-      <td>{{ item.customerName }}</td>
-      <td>{{ item.productName }}</td>
-      <td>{{ item.quantity }}</td>
-      <td>{{ item.price | currency: 'INR' }}</td>
-      <td>{{ item.amount | currency: 'INR' }}</td>
-      <td>{{ item.date }}</td>
-    </tr>
-  </tbody>
-</table>
+    <tbody>
+      <tr *ngFor="let item of dataList">
+        <td>{{ item.customerName }}</td>
+        <td>{{ item.productName }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price | currency: 'INR' }}</td>
+        <td>{{ item.amount | currency: 'INR' }}</td>
+        <td>{{ item.date }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <!-- <p *ngIf="dataList.length === 0">No data available</p> -->

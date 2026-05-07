@@ -2,12 +2,20 @@
   <h2 class="title">Reports</h2>
 
   <div class="filter-card">
-    <form [formGroup]="form" (ngSubmit)="search()">
+    <form [formGroup]="form">
       <input type="date" formControlName="startDate" />
       <input type="date" formControlName="endDate" />
       <input type="text" formControlName="customerName" placeholder="Customer Name" />
 
-      <button type="submit" class="submit-btn">Search</button>
+      <button
+        type="submit"
+        class="submit-btn"
+        (click)="search()"
+        [disabled]="form.invalid || isLoading"
+      >
+        Search <span *ngIf="isLoading" class="loader"></span>
+      </button>
+      <button type="submit" class="clear-btn" (click)="clearForm()">Clear</button>
     </form>
   </div>
 

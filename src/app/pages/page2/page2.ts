@@ -126,6 +126,7 @@ export class Page2 {
   clearForm() {
     this.form.reset();
     this.data = [];
+    this.service.setData('page2', this.data);
     this.errmsg = 'No Data Found';
     this.flag = true;
   }
@@ -162,6 +163,7 @@ export class Page2 {
   confirmDeletion(id: number) {
     this.service.delete(id).subscribe({
       next: () => {
+        this.form.reset();
         this.data = this.data.filter((item) => item.id !== id);
         this.service.setData('page2', this.data);
         if (this.data.length === 0) {
